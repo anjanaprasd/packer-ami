@@ -51,8 +51,7 @@ packer validate .
 ### Step 05 
 Make sure you have authenitcated with aws before executing the command.
 
-### Step 06.
-packer build 
+### Step 06. 
 packer build --var-file=ami.pkrvars.hcl . 
 
 
