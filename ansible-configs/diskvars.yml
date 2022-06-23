@@ -1,0 +1,15 @@
+rawdisks:
+ - disk_count: 1
+   disk_size: 25GiB
+   drive: /dev/xvdb # drive name cloud be change with your ebs volume count and type. you can identify it using executing lsblk command inside in shell provisioner.
+   disk_type: lvm
+
+vg_group:
+  - vg_name: vg00
+    device: /dev/xvdb1 # drive name cloud be change with your ebs volume count and type. you can identify it using executing lsblk command inside in shell provisioner.
+
+lv_group:
+  - name: export
+    size: 20g
+    vg_group: vg00
+    mount_tg: /app/data

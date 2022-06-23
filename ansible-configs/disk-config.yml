@@ -1,0 +1,50 @@
+---
+- name: LVMAnsiblePlayBook.
+  hosts: default
+  become: true
+  become_user: root
+  vars_files:
+    - diskvars.yml
+  tasks:
+    - name: create /app/data directory.
+      ansible.builtin.file:
+        path: /app/data
+        owner: root
+        group: root
+        state: directory
+
+    - name: partition create.
+      parted:
+        device: "{{ item.drive }}"
+        number: "{{ item.disk_count }}"
+        part_end: "{{ item.disk_size }}"
+        flags: [ "{{ item.disk_type }}"]
+        state: present
+      loop: "{{ rawdisks }}"
+
+    - name: volume group create.
+      lvg:
+        vg: "{{ item.vg_name }}"
+        pvs: "{{ item.device }}"
+      loop: "{{ vg_group }}"
+
+    - name: logical volume creation.
+      lvol:
+        vg: "{{ item.vg_group }}"
+        lv: "{{ item.name }}"
+        size: "{{ item.size }}"
+      loop: "{{ lv_group }}"
+
+    - name: file system create.
+      filesystem:
+        dev: "/dev/{{ item.vg_group }}/{{ item.name }}"
+        type: xfs
+      loop: "{{ lv_group }}"
+
+    - name: mount lvm's.
+      mount:
+        path: "{{ item.mount_tg }}"
+        src: "/dev/{{ item.vg_group }}/{{ item.name }}"
+        fstype: xfs
+        state: mounted
+      loop: "{{ lv_group }}"
