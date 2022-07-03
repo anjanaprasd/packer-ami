@@ -53,6 +53,3 @@ Make sure you have authenitcated with aws before executing the command.
 
 ### Step 06. 
 packer build --var-file=ami.pkrvars.hcl . 
-
-
-Further you can add your own custom features into this adding more provisioners such as ansible or shell play book into ami-pkvars.hcl.
