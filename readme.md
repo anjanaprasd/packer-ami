@@ -1,55 +1,65 @@
 ##### Hi Everyone,
 
-##### I've written this code to build amazon AMI using the packer amazon-ebs type. This builder build an AMI by launching an AWS EC2 instance base on the given source AMI. Also, it will create a temporary ssh-key, and security group rules to complete the AMI creation process. Once the build  completed. It will destroy all the temporarly created resources, And your AMI will list under the AWS-EC2 --- AMI section.
+#####Packer and Ansible are used by Amazon AMI Builder.
 
-###### This builder is not an AMI build setup. I've added a separate LVM configuration for the new AMIs using an ansible provisioner. In this scenario, the author has used two provisioners (shell/ansible) to complete this AMI build. This code has written using the HCL language.
-
-
-<!-- Horizantal rule -->
+Using the Packer Amazon-EBS type, the following code creates an Amazon Machine Image (AMI). A temporary SSH key and security group rules are made, the AMI generation procedure is finished, and the builder launches an AWS EC2 instance based on the source AMI that was provided. Your new AMI will be listed in the AWS-EC2 AMI section once the construction is finished, at which point all temporary resources created during the build are destroyed.
 
 
-#### ami-example.pkr.hcl file contains the main configurations related to AMI build.Here, I've used more variables for dry principle.
+Please be aware that this builder is not an AMI build setup and that new AMIs are introduced using an Ansible provisioner and a separate LVM configuration. In this instance, the author built this AMI using two provisioners (shell and Ansible). The HCL language was used to create this program.
+Files
 
-#### ami-pkvars.hcl file you can add your static variables.
 
-#### variables.pkr.hcl file contains all default variables.
-
-#### ansible-configs diretory contains the ansible releated configuration.
 
 <!-- Horizantal rule -->
 
 
-### How to exeute this code.
+Files
 
-### Step 01. 
+    ami-example.pkr.hcl: Contains the main configurations related to AMI build. Here, more variables have been used for the DRY principle.
+    ami-pkvars.hcl: You can add your static variables to this file.
+    variables.pkr.hcl: Contains all default variables.
+    ansible-configs directory: Contains Ansible-related configuration.
 
- As a first step you have to install packer and ansible in your local system. 
+How to Execute the Code
+Step 1: Install Packer and Ansible
 
- please refer below link to install packer in your local system.*
-  *https://learn.hashicorp.com/tutorials/packer/get-started-install-cli
+As a first step, you need to install Packer and Ansible on your local system. Please refer to the below links for installation instructions:
 
- Asnible installtion.
- yum install -y ansible (redhat/centos/amazon-linux)
- apt-get install ansible -y (ubuntu)
+    Install Packer
+    Install Ansible:
+        yum install -y ansible (RedHat/CentOS/Amazon Linux)
+        apt-get install ansible -y (Ubuntu)
 
-### Step 02.
-Make sure packer and ansible are installed in the system by executing below command.
-packer -version 
-ansible --version 
+Step 2: Check the Installation
 
-### Step 03.
-change direcory to where your code is located.
-execute packer init command to download required provider plugins.
+Make sure Packer and Ansible are installed on your system by executing the below commands:
 
-### Step 04.
-format packer code and validate.
+css
 
-packer fmt . 
+packer -version
+ansible --version
+
+Step 3: Change Directory
+
+Change directory to where your code is located and execute the packer init command to download required provider plugins.
+Step 4: Format and Validate Packer Code
+
+Format the Packer code and validate it using the following commands:
+
+bash
+
+packer fmt .
 packer validate .
 
+Step 5: Authenticate with AWS
 
-### Step 05 
-Make sure you have authenitcated with aws before executing the command.
+Make sure you have authenticated with AWS before executing the command.
+Step 6: Build the AMI
 
-### Step 06. 
-packer build --var-file=ami.pkrvars.hcl . 
+Execute the following command to build the AMI:
+
+csharp
+
+packer build --var-file=ami.pkrvars.hcl .
+
+That's it! You have successfully built your Amazon AMI using Packer and Ansible.
