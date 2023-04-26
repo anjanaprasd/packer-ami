@@ -1,6 +1,6 @@
 Hi Everyone,
 
-####Packer and Ansible are used by Amazon AMI Builder.
+Packer and Ansible are used by Amazon AMI Builder.
 
 Using the Packer Amazon-EBS type, the following code creates an Amazon Machine Image (AMI). A temporary SSH key and security group rules are made, the AMI generation procedure is finished, and the builder launches an AWS EC2 instance based on the source AMI that was provided. Your new AMI will be listed in the AWS-EC2 AMI section once the construction is finished, at which point all temporary resources created during the build are destroyed.
 
